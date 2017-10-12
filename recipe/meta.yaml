@@ -1,4 +1,4 @@
-{% set version = '2.2.1' %}
+{% set version = '2.3' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,15 +12,23 @@ source:
   url:
     - https://cran.r-project.org/src/contrib/gridExtra_{{ version }}.tar.gz
     - https://cran.r-project.org/src/contrib/Archive/gridExtra/gridExtra_{{ version }}.tar.gz
-  sha256: 44fe455a5bcdf48a4ece7a542f83e7749cf251dc1df6ae7634470240398c6818
+  sha256: 81b60ce6f237ec308555471ae0119158b115463df696d2eca9b177ded8988e3b
+
+
+  # patches:
+   # List any patch files here
+   # - fix.patch
 
 build:
+  # If this is a new build for the same version, increment the build number.
   number: 0
-  skip: true  # [win32]
+
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
+# Suggests: ggplot2, egg, lattice, knitr, testthat
 requirements:
   build:
     - r-base
@@ -32,11 +40,18 @@ requirements:
 
 test:
   commands:
-    - $R -e "library('gridExtra')"  # [not win]
+    # You can put additional test commands to be run here.
+    - $R -e "library('gridExtra')"           # [not win]
     - "\"%R%\" -e \"library('gridExtra')\""  # [win]
 
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
+
 about:
-  home: https://github.com/baptiste/gridextra
+  home: https://CRAN.R-project.org/package=gridExtra
   license: GPL (>= 2)
   summary: Provides a number of user-level functions to work with "grid" graphics, notably to
     arrange multiple grid-based plots on a page, and draw tables.
@@ -46,3 +61,28 @@ extra:
   recipe-maintainers:
     - johanneskoester
     - bgruening
+    - mingwandroid
+
+# The original CRAN metadata for this package was:
+
+# Package: gridExtra
+# Authors@R: c(person("Baptiste", "Auguie", email = "baptiste.auguie@gmail.com", role = c("aut", "cre")), person("Anton", "Antonov", email = "tonytonov@gmail.com", role = c("ctb")))
+# License: GPL (>= 2)
+# Title: Miscellaneous Functions for "Grid" Graphics
+# Type: Package
+# Description: Provides a number of user-level functions to work with "grid" graphics, notably to arrange multiple grid-based plots on a page, and draw tables.
+# Version: 2.3
+# VignetteBuilder: knitr
+# Imports: gtable, grid, grDevices, graphics, utils
+# Suggests: ggplot2, egg, lattice, knitr, testthat
+# RoxygenNote: 6.0.1
+# NeedsCompilation: no
+# Packaged: 2017-09-08 22:52:09 UTC; baptiste
+# Author: Baptiste Auguie [aut, cre], Anton Antonov [ctb]
+# Maintainer: Baptiste Auguie <baptiste.auguie@gmail.com>
+# Repository: CRAN
+# Date/Publication: 2017-09-09 14:12:08 UTC
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
