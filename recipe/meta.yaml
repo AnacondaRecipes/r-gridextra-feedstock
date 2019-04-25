@@ -17,6 +17,7 @@ build:
   merge_build_host: True  # [win]
   # If this is a new build for the same version, increment the build number.
   number: 0
+  noarch: generic
 
   # This is required to make R link correctly on Linux.
   rpaths:
@@ -54,6 +55,7 @@ about:
   summary: Provides a number of user-level functions to work with "grid" graphics, notably to
     arrange multiple grid-based plots on a page, and draw tables.
   license_family: GPL3
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
